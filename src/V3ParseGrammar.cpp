@@ -193,6 +193,7 @@ AstVar* V3ParseGrammar::createVariable(FileLine* fileline, const string& name,
     AstNodeDType* dtypep = GRAMMARP->m_varDTypep;
     UINFO(5, "  creVar " << name << "  decl=" << GRAMMARP->m_varDecl
                          << "  io=" << GRAMMARP->m_varIO << "  dt=" << (dtypep ? "set" : ""));
+
     if (GRAMMARP->m_varIO == VDirection::NONE  // In non-ANSI port list
         && GRAMMARP->m_varDecl == VVarType::PORT) {
         // Just a port list with variable name (not v2k format); AstPort already created
@@ -242,6 +243,7 @@ AstVar* V3ParseGrammar::createVariable(FileLine* fileline, const string& name,
     nodep->addAttrsp(attrsp);
     nodep->ansi(m_pinAnsi);
     nodep->declTyped(m_varDeclTyped);
+    nodep->isRegLogic(dtypep->basicp() && dtypep->basicp()->isRegLogic());
     nodep->lifetime(m_varLifetime);
     nodep->delayp(getNetDelay());
     if (GRAMMARP->m_varDecl != VVarType::UNKNOWN) nodep->combineType(GRAMMARP->m_varDecl);

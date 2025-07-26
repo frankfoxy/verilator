@@ -190,10 +190,11 @@ void AstNodeCond::numberOperate(V3Number& out, const V3Number& lhs, const V3Numb
 }
 
 void AstBasicDType::init(VBasicDTypeKwd kwd, VSigning numer, int wantwidth, int wantwidthmin,
-                         AstRange* rangep) {
+                         AstRange* rangep, bool logic_reg) {
     // wantwidth=0 means figure it out, but if a widthmin is >=0
     //    we allow width 0 so that {{0{x}},y} works properly
     // wantwidthmin=-1:  default, use wantwidth if it is non zero
+    m.m_logic_reg = logic_reg;
     m.m_keyword = kwd;
     // Implicitness: // "parameter X" is implicit and sized from initial
     // value, "parameter reg x" not

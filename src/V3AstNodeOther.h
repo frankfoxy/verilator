@@ -1993,9 +1993,11 @@ class AstVar final : public AstNode {
     bool m_ignorePostRead : 1;  // Ignore reads in 'Post' blocks during ordering
     bool m_ignorePostWrite : 1;  // Ignore writes in 'Post' blocks during ordering
     bool m_ignoreSchedWrite : 1;  // Ignore writes in scheduling (for special optimizations)
+    bool m_isRegLogic : 1;  // << patched reg as logic from grammer
 
     void init() {
         m_ansi = false;
+        m_declTyped = false;
         m_declTyped = false;
         m_tristate = false;
         m_primaryIO = false;
@@ -2136,6 +2138,7 @@ public:
     }
     void ansi(bool flag) { m_ansi = flag; }
     void declTyped(bool flag) { m_declTyped = flag; }
+    void isRegLogic(bool flag) { m_isRegLogic = flag; }
     void sensIfacep(AstIface* nodep) { m_sensIfacep = nodep; }
     void attrClocker(VVarAttrClocker flag) { m_attrClocker = flag; }
     void attrFileDescr(bool flag) { m_fileDescr = flag; }
@@ -2209,6 +2212,7 @@ public:
     bool isAnsi() const { return m_ansi; }
     bool isContinuously() const { return m_isContinuously; }
     bool isDeclTyped() const { return m_declTyped; }
+    bool isRegLogic() const { return m_isRegLogic; }
     bool isInout() const { return m_direction.isInout(); }
     bool isInoutOrRef() const { return m_direction.isInoutOrRef(); }
     bool isInput() const { return m_direction.isInput(); }

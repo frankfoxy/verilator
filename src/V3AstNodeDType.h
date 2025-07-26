@@ -390,15 +390,16 @@ class AstBasicDType final : public AstNodeDType {
     struct Members final {
         VBasicDTypeKwd m_keyword;  // (also in VBasicTypeKey) What keyword created basic type
         VNumRange m_nrange;  // (also in VBasicTypeKey) Numeric msb/lsb (if non-opaque keyword)
+        bool m_logic_reg;  // reg as logic
         bool operator==(const Members& rhs) const {
             return rhs.m_keyword == m_keyword && rhs.m_nrange == m_nrange;
         }
     } m;
     // See also in AstNodeDType: m_width, m_widthMin, m_numeric(issigned)
 public:
-    AstBasicDType(FileLine* fl, VBasicDTypeKwd kwd, const VSigning& signst = VSigning::NOSIGN)
+    AstBasicDType(FileLine* fl, VBasicDTypeKwd kwd, const VSigning& signst = VSigning::NOSIGN, bool reg_as_logic=false)
         : ASTGEN_SUPER_BasicDType(fl) {
-        init(kwd, signst, 0, -1, nullptr);
+        init(kwd, signst, 0, -1, nullptr, reg_as_logic);
     }
     AstBasicDType(FileLine* fl, VFlagLogicPacked, int wantwidth)
         : ASTGEN_SUPER_BasicDType(fl) {
@@ -420,7 +421,7 @@ public:
     // See also addRange in verilog.y
 private:
     void init(VBasicDTypeKwd kwd, VSigning numer, int wantwidth, int wantwidthmin,
-              AstRange* rangep);
+              AstRange* rangep, bool logic_reg=false);
 
 public:
     ASTGEN_MEMBERS_AstBasicDType;
@@ -455,6 +456,7 @@ public:
     VBasicDTypeKwd keyword() const VL_MT_SAFE {  // Avoid using - use isSomething accessors instead
         return m.m_keyword;
     }
+    bool isRegLogic() const { return m.m_logic_reg; }
     bool isBitLogic() const { return keyword().isBitLogic(); }
     bool isDouble() const VL_MT_STABLE { return keyword().isDouble(); }
     bool isEvent() const VL_MT_STABLE { return keyword() == VBasicDTypeKwd::EVENT; }

@@ -2141,7 +2141,7 @@ integer_atom_type<basicDTypep>: // ==IEEE: integer_atom_type
 integer_vector_type<basicDTypep>:       // ==IEEE: integer_atom_type
                 yBIT                                    { $$ = new AstBasicDType{$1, VBasicDTypeKwd::BIT}; }
         |       yLOGIC                                  { $$ = new AstBasicDType{$1, VBasicDTypeKwd::LOGIC}; }
-        |       yREG                                    { $$ = new AstBasicDType{$1, VBasicDTypeKwd::LOGIC}; } // logic==reg
+        |       yREG                                    { $$ = new AstBasicDType{$1, VBasicDTypeKwd::LOGIC, VSigning::NOSIGN, true}; } // logic==reg
         ;
 
 non_integer_type<basicDTypep>:  // ==IEEE: non_integer_type
