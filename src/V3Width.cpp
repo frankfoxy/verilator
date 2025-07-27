@@ -5801,6 +5801,25 @@ class WidthVisitor final : public VNVisitor {
             // Very much like like an assignment, but which side is LH/RHS
             // depends on pin being a in/output/inout.
             userIterateAndNext(nodep->exprp(), WidthVP{nodep->modVarp()->dtypep(), PRELIM}.p());
+
+            // added lines -->
+            // UINFO(0, "   xxxx " << nodep << " exprp:" << nodep->exprp() << endl
+            //                     << " dtyped:" << nodep->exprp()->dtypep() << endl);
+            // nodep->dumpTree("-  PinOut: ");
+            {
+                // port output pin to reg is not allow in verilog
+                if (v3Global.opt.lintOnly() && nodep->modVarp()->direction() != VDirection::INPUT
+                    && nodep->exprp()->dtypep() && nodep->exprp()->dtypep()->basicp()
+                    && nodep->exprp()->dtypep()->basicp()->isRegLogic()) {
+                    nodep->exprp()->v3warn(
+                        CONTASSREG,
+                        ucfirst(nodep->prettyOperatorName())
+                            << " assignment to reg, perhaps intended wire"
+                               " (IEEE 2005 6.1; Verilog only, legal in SV(disabled): ");
+                }
+            }
+            // <--
+
             AstNodeDType* modDTypep = nodep->modVarp()->dtypep();
             AstNodeDType* conDTypep = nodep->exprp()->dtypep();
             UASSERT_OBJ(modDTypep, nodep, "Unlinked pin data type");
