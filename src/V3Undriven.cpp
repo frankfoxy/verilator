@@ -406,8 +406,9 @@ class UndrivenVisitor final : public VNVisitorConst {
                                                << " (IEEE 1800-2023 6.5): "
                                                << nodep->prettyNameQ());
             } else if (m_inContAssign && !nodep->varp()->varType().isContAssignable()
-                       && (v3Global.opt.lintOnly() ? nodep->varp()->isRegLogic()
-                                                   : !nodep->fileline()->language().systemVerilog())) {
+                       && (v3Global.opt.lintOnly()
+                               ? nodep->varp()->isRegLogic()
+                               : !nodep->fileline()->language().systemVerilog())) {
                 nodep->v3warn(CONTASSREG,
                               "Continuous assignment to reg, perhaps intended wire"
                                   << " (IEEE 1364-2005 6.1; Verilog only, legal in SV (disabled): "
@@ -420,7 +421,7 @@ class UndrivenVisitor final : public VNVisitorConst {
                     "is valid on the left hand side of a procedural assignment"
                         << " (IEEE 1800-2023 13.5): " << nodep->prettyNameQ());
             }
-	        // added lines -->
+            // added lines -->
             if (v3Global.opt.lintOnly() && m_inContAssign
                 && nodep->varp()->varType() == VVarType::PORT && nodep->varp()->isRegLogic()) {
                 nodep->v3warn(CONTASSREG,

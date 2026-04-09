@@ -19,8 +19,7 @@ macro(addBuildType sourceConfig newConfig)
     foreach(variableName ${variableNames})
         if(variableName MATCHES "^CMAKE_.*_${sourceConfig}(|_.*)$")
             string(
-                REPLACE
-                _${sourceConfig}
+                REPLACE _${sourceConfig}
                 _${newConfig}
                 newVariableName
                 ${variableName}
@@ -373,8 +372,7 @@ add_custom_command(
         --classes
 )
 list(
-    APPEND
-    GENERATED_FILES
+    APPEND GENERATED_FILES
     V3Ast__gen_forward_class_decls.h
     V3Dfg__gen_forward_class_decls.h
 )

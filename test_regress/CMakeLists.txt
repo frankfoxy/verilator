@@ -60,8 +60,7 @@ endfunction()
 
 # Normalise -- to -
 string(
-    REGEX REPLACE
-    "(^|;)--"
+    REGEX REPLACE "(^|;)--"
     "\\1-"
     TEST_VERILATOR_ARGS_NORM
     "${TEST_VERILATOR_ARGS}"
@@ -73,16 +72,14 @@ getarg(TEST_VERILATOR_ARGS_NORM "-trace-threads" TEST_TRACE_THREADS)
 
 # Strip unwanted args with 1 parameter
 string(
-    REGEX REPLACE
-    "(^|;)--?(Mdir|make|prefix|threads|trace-threads);[^;]*"
+    REGEX REPLACE "(^|;)--?(Mdir|make|prefix|threads|trace-threads);[^;]*"
     ""
     TEST_VERILATOR_ARGS
     "${TEST_VERILATOR_ARGS}"
 )
 # Strip unwanted args
 string(
-    REGEX REPLACE
-    "(^|;)--?(sc|cc)"
+    REGEX REPLACE "(^|;)--?(sc|cc)"
     ""
     TEST_VERILATOR_ARGS
     "${TEST_VERILATOR_ARGS}"

@@ -397,7 +397,8 @@ class AstBasicDType final : public AstNodeDType {
     } m;
     // See also in AstNodeDType: m_width, m_widthMin, m_numeric(issigned)
 public:
-    AstBasicDType(FileLine* fl, VBasicDTypeKwd kwd, const VSigning& signst = VSigning::NOSIGN, bool reg_as_logic=false)
+    AstBasicDType(FileLine* fl, VBasicDTypeKwd kwd, const VSigning& signst = VSigning::NOSIGN,
+                  bool reg_as_logic = false)
         : ASTGEN_SUPER_BasicDType(fl) {
         init(kwd, signst, 0, -1, nullptr, reg_as_logic);
     }
@@ -421,7 +422,7 @@ public:
     // See also addRange in verilog.y
 private:
     void init(VBasicDTypeKwd kwd, VSigning numer, int wantwidth, int wantwidthmin,
-              AstRange* rangep, bool logic_reg=false);
+              AstRange* rangep, bool logic_reg = false);
 
 public:
     ASTGEN_MEMBERS_AstBasicDType;
